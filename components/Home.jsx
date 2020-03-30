@@ -10,17 +10,20 @@ function Home(props) {
   const [city, setCity] = useState('');
   const [desc, setDesc] = useState('');
   const [temp, setTemp] = useState('');
-  const [min, setMin] = useState('');
-  const [max, setMax] = useState('');
-  const [country, setCountry] = useState('');
+  // const [min, setMin] = useState('');
+  // const [max, setMax] = useState('');
+  // const [country, setCountry] = useState('');
   
   useEffect(() => {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}&lang=${lang}`)
-        .then(response => response.json())
-        .then(data => data.data)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=fr`)
+        .then((response) => response.json())
         .then(r => {
             setCity(r.name)
-            setTemp(r.main.temp)
+            setTemp(r.main.temp.toFixed(1))
+            setDesc(r.weather[0].description)
+        })
+        .catch((error)=>{
+          console.log(error);
         });
 }, []);
 
@@ -39,8 +42,8 @@ function Home(props) {
           source={{uri: 'https://www.stickpng.com/assets/images/580b585b2edbce24c47b270f.png'}}
         />
      <Text style={homeStyle.ville}>{city}</Text>
-     <Text style={homeStyle.temperature}>{temp}C°</Text>
-     <Text style={homeStyle.description}>Ensoleillé</Text>
+     <Text style={homeStyle.temperature}>{temp} C°</Text>
+     <Text style={homeStyle.description}>{desc}</Text>
   </View>
  );
 }
@@ -59,6 +62,7 @@ const homeStyle = StyleSheet.create({
    color: 'white',
    alignItems: 'center',
    justifyContent: 'center',
+   fontSize: 16
   },
 
   description:{
