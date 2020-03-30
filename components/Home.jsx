@@ -1,28 +1,28 @@
-import React, {useState} from 'react';
-import { StyleSheet, View, Text, Image, FlatList,Button,Alert } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, View, Text, Image} from 'react-native';
 
 function Home(props) {
-  const apiKey = '41e2a48af7b584163dc359b091426b55';
+  const apiKey = '96bf68a7d698802acd26cacd7a23d3df';
   var cityName = 'Paris';
   const units = 'metric';
   const lang = 'fr';
   
   const [city, setCity] = useState('');
-  // const [desc, setDesc] = useState('');
+  const [desc, setDesc] = useState('');
   const [temp, setTemp] = useState('');
-  // const [min, setMin] = useState('');
-  // const [max, setMax] = useState('');
-  // const [country, setCountry] = useState('');
+  const [min, setMin] = useState('');
+  const [max, setMax] = useState('');
+  const [country, setCountry] = useState('');
   
-  
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}&lang=${lang}`)
-  .then(response=>response.json())
-  .then(data => data.data)
-  .then(r=>{
-    setCity(r.name)
-    setTemp(r.main.temp)
-  });
-
+  useEffect(() => {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}&lang=${lang}`)
+        .then(response => response.json())
+        .then(data => data.data)
+        .then(r => {
+            setCity(r.name)
+            setTemp(r.main.temp)
+        });
+}, []);
 
   var date = new Date();
   var heure = date.getHours();
@@ -45,7 +45,6 @@ function Home(props) {
  );
 }
 
-setTimeout(Home,1000);
 
 const homeStyle = StyleSheet.create({
 
