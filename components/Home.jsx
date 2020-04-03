@@ -4,15 +4,13 @@ import { StyleSheet, View, Text, Image} from 'react-native';
 function Home(props) {
   const apiKey = '96bf68a7d698802acd26cacd7a23d3df';
   var cityName = 'Paris';
-  const units = 'metric';
-  const lang = 'fr';
   
   const [city, setCity] = useState('');
   const [desc, setDesc] = useState('');
   const [temp, setTemp] = useState('');
-  // const [min, setMin] = useState('');
-  // const [max, setMax] = useState('');
-  // const [country, setCountry] = useState('');
+  const [min, setMin] = useState('');
+  const [max, setMax] = useState('');
+  const [country, setCountry] = useState('');
   
   useEffect(() => {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=fr`)
@@ -20,7 +18,10 @@ function Home(props) {
         .then(r => {
             setCity(r.name)
             setTemp(r.main.temp.toFixed(1))
+            setMin(r.main.temp_min)
+            setMax(r.main.temp_max)
             setDesc(r.weather[0].description)
+            setCountry(r.sys.country)
         })
         .catch((error)=>{
           console.log(error);
@@ -41,9 +42,10 @@ function Home(props) {
           style={{width: 150, height: 150}}
           source={{uri: 'https://www.stickpng.com/assets/images/580b585b2edbce24c47b270f.png'}}
         />
-     <Text style={homeStyle.ville}>{city}</Text>
+     <Text style={homeStyle.ville}>{city} {country}</Text>
      <Text style={homeStyle.temperature}>{temp} C°</Text>
      <Text style={homeStyle.description}>{desc}</Text>
+     <Text style={homeStyle.description}>Min: {min} C°  Max: {max} C°</Text>
   </View>
  );
 }

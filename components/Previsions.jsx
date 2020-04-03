@@ -8,9 +8,6 @@ function Previsions(props) {
   var cityName = 'Paris';
       
   console.log("Bonjour");
-
-  const [city, setCity] = useState('');
-  const [desc, setDesc] = useState('');
   const [temp1, setTemp1] = useState('');
   const [temp2, setTemp2] = useState('');
   const [temp3, setTemp3] = useState('');
